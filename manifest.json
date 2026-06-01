@@ -1,0 +1,15 @@
+{
+  "name": "帳本",
+  "short_name": "帳本",
+  "start_url": "/zhangben/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/googlefonts/noto-emoji/main/png/72/emoji_u1f4b0.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ]
+}
