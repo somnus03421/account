@@ -10,4 +10,3 @@
 **Android（Chrome）**  
 右上角選單 → 安裝應用程式  
   
-功能有問題或建議可以聯繫我：gina1234512@gmail.com
