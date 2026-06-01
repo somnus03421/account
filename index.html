@@ -199,6 +199,12 @@
         <div class="card-title">朋友往來淨額</div>
         <div id="friend-summary"></div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <button class="btn" onclick="exportExcel()" style="font-size:13px;padding:12px;">📥 匯出 Excel</button>
+        <button class="btn btn-outline" onclick="importExcel()" style="font-size:13px;padding:12px;">📤 匯入備份</button>
+      </div>
+      <input type="file" id="import-input" accept=".json" style="display:none" onchange="handleImport(this)">
+      <p style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:16px;">匯出的檔案可作為備份，也可以用 Excel 開啟</p>
     </div>
 
   </div>
@@ -502,6 +508,89 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// --- 匯出 Excel（實際上是 CSV，Excel 可以直接開） ---
+function exportExcel() {
+  const BOM = '\uFEFF'; // 讓 Excel 正確顯示中文
+
+  // 工作表1：記帳記錄
+  let expCsv = '日期,描述,分類,金額\n';
+  expenses.forEach(e => {
+    const cat = CAT[e.cat] ? CAT[e.cat].label : '其他';
+    expCsv += `${e.date},"${e.desc}",${cat},${e.amount}\n`;
+  });
+
+  // 工作表2：欠款記錄
+  let debtCsv = '日期,說明,朋友,類型,金額,狀態\n';
+  debts.forEach(d => {
+    const type = d.type === 'owe' ? '我欠對方' : '對方欠我';
+    const status = d.settled ? '已結清' : '未結清';
+    debtCsv += `${d.date},"${d.desc}","${d.person}",${type},${d.amount},${status}\n`;
+  });
+
+  // 淨額匯總
+  const { net } = computeNet();
+  let netCsv = '朋友,淨額,方向\n';
+  Object.entries(net).forEach(([name, val]) => {
+    netCsv += `"${name}",${Math.abs(val)},${val >= 0 ? '對方欠你' : '你欠對方'}\n`;
+  });
+
+  // 合併成一個檔案，用分隔線區分三個表
+  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
+  const content = BOM +
+    `=== 記帳記錄（匯出時間：${now}）===\n` + expCsv +
+    `\n=== 欠款明細 ===\n` + debtCsv +
+    `\n=== 欠款淨額匯總 ===\n` + netCsv;
+
+  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `帳本備份_${now}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('已匯出 ✓');
+
+  // 同時也存一份 JSON 備份（方便之後匯入還原）
+  const jsonBackup = JSON.stringify({ expenses, debts, exportedAt: new Date().toISOString() }, null, 2);
+  const jsonBlob = new Blob([jsonBackup], { type: 'application/json' });
+  const jsonUrl = URL.createObjectURL(jsonBlob);
+  const b = document.createElement('a');
+  b.href = jsonUrl;
+  b.download = `帳本備份_${now}.json`;
+  setTimeout(() => { b.click(); URL.revokeObjectURL(jsonUrl); }, 500);
+}
+
+// --- 匯入 JSON 備份還原資料 ---
+function importExcel() {
+  document.getElementById('import-input').click();
+}
+
+function handleImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.expenses || !data.debts) { showToast('檔案格式不對'); return; }
+      if (!confirm(`確定要還原備份？\n（${data.expenses.length} 筆記帳、${data.debts.length} 筆欠款）\n\n目前的資料會被覆蓋`)) return;
+      expenses = data.expenses;
+      debts = data.debts;
+      nextExpId  = expenses.reduce((m,e) => Math.max(m, e.id), 0) + 1;
+      nextDebtId = debts.reduce((m,d) => Math.max(m, d.id), 0) + 1;
+      save();
+      renderExpenses();
+      renderDebts();
+      renderSummary();
+      showToast('備份還原成功 ✓');
+    } catch {
+      showToast('讀取失敗，請確認是正確的備份檔');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
 }
 
 // 初始化
