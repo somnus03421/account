@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1a1a1a">
@@ -513,53 +514,61 @@ function showToast(msg) {
 // --- 匯出 Excel（實際上是 CSV，Excel 可以直接開） ---
 function exportExcel() {
   const BOM = '\uFEFF'; // 讓 Excel 正確顯示中文
-
+  // 檢查 SheetJS 是否載入成功
+    if (typeof XLSX === 'undefined') {
+        showToast('處理套件載入中，請稍後再試');
+        return;
+    }
+  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
+  const wb = XLSX.utils.book_new();// 建立一個新的 Excel 工作簿 (Workbook)
   // 工作表1：記帳記錄
-  let expCsv = '日期,描述,分類,金額\n';
-  expenses.forEach(e => {
-    const cat = CAT[e.cat] ? CAT[e.cat].label : '其他';
-    expCsv += `${e.date},"${e.desc}",${cat},${e.amount}\n`;
-  });
+  const expData = expenses.map(e => ({
+        '日期': e.date,
+        '描述': e.desc,
+        '分類': CAT[e.cat] ? CAT[e.cat].label : '其他',
+        '金額': e.amount
+    }));
+    // 如果沒資料，至少給個標頭避免出錯
+    const wsExp = XLSX.utils.json_to_sheet(expData.length ? expData : [{'日期':'','描述':'','分類':'','金額':''}]);
+    XLSX.utils.book_append_sheet(wb, wsExp, "記帳記錄");
 
   // 工作表2：欠款記錄
-  let debtCsv = '日期,說明,朋友,類型,金額,狀態\n';
-  debts.forEach(d => {
-    const type = d.type === 'owe' ? '我欠對方' : '對方欠我';
-    const status = d.settled ? '已結清' : '未結清';
-    debtCsv += `${d.date},"${d.desc}","${d.person}",${type},${d.amount},${status}\n`;
-  });
+  const debtData = debts.map(d => ({
+        '日期': d.date,
+        '說明': d.desc,
+        '朋友': d.person,
+        '類型': d.type === 'owe' ? '我欠對方' : '對方欠我',
+        '金額': d.amount,
+        '狀態': d.settled ? '已結清' : '未結清'
+    }));
+  const wsDebt = XLSX.utils.json_to_sheet(debtData.length ? debtData : [{'日期':'','說明':'','朋友':'','類型':'','金額':'','狀態':''}]);
+  XLSX.utils.book_append_sheet(wb, wsDebt, "欠款明細");
 
   // 淨額匯總
   const { net } = computeNet();
-  let netCsv = '朋友,淨額,方向\n';
-  Object.entries(net).forEach(([name, val]) => {
-    netCsv += `"${name}",${Math.abs(val)},${val >= 0 ? '對方欠你' : '你欠對方'}\n`;
-  });
+    const netData = Object.entries(net).map(([name, val]) => ({
+        '朋友': name,
+        '淨額': Math.abs(val),
+        '方向': val >= 0 ? '對方欠你' : '你欠對方'
+    }));
+    const wsNet = XLSX.utils.json_to_sheet(netData.length ? netData : [{'朋友':'','淨額':'','方向':''}]);
+    XLSX.utils.book_append_sheet(wb, wsNet, "欠款淨額匯總");
 
-  // 合併成一個檔案，用分隔線區分三個表
-  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
-  const content = BOM +
-    `=== 記帳記錄（匯出時間：${now}）===\n` + expCsv +
-    `\n=== 欠款明細 ===\n` + debtCsv +
-    `\n=== 欠款淨額匯總 ===\n` + netCsv;
+ // 輸出並下載真正的 Excel 檔案 (.xlsx)
+    XLSX.writeFile(wb, `帳本備份_${now}.xlsx`);
+    showToast('已匯出 Excel ✓');
 
-  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `帳本備份_${now}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('已匯出 ✓');
-
-  // 同時也存一份 JSON 備份（方便之後匯入還原）
-  const jsonBackup = JSON.stringify({ expenses, debts, exportedAt: new Date().toISOString() }, null, 2);
-  const jsonBlob = new Blob([jsonBackup], { type: 'application/json' });
-  const jsonUrl = URL.createObjectURL(jsonBlob);
-  const b = document.createElement('a');
-  b.href = jsonUrl;
-  b.download = `帳本備份_${now}.json`;
-  setTimeout(() => { b.click(); URL.revokeObjectURL(jsonUrl); }, 500);
+  // --- 保留你原本的 JSON 備份功能（供還原使用） ---
+    const jsonBackup = JSON.stringify({ expenses, debts, exportedAt: new Date().toISOString() }, null, 2);
+    const jsonBlob = new Blob([jsonBackup], { type: 'application/json' });
+    const jsonUrl = URL.createObjectURL(jsonBlob);
+    const b = document.createElement('a');
+    b.href = jsonUrl;
+    b.download = `帳本備份_${now}.json`;
+    setTimeout(() => {
+        b.click();
+        URL.revokeObjectURL(jsonUrl);
+    }, 500);
 }
 
 // --- 匯入 JSON 備份還原資料 ---
