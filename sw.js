@@ -1,13 +1,13 @@
-// 用當下時間當版本號
 const CACHE = 'zhangben-' + Date.now();
+const FILES = ['./', './index.html', './manifest.json'];
 
-self.addEventListener('install', e => {
+self.addEventListener('install', e =>
   e.waitUntil(
     caches.open(CACHE)
-      .then(c => c.addAll(['./', './index.html', './manifest.json']))
+      .then(c => c.addAll(FILES))
       .then(() => self.skipWaiting())
-  );
-});
+  )
+);
 
 self.addEventListener('activate', e =>
   e.waitUntil(
