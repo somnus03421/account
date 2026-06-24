@@ -56,7 +56,7 @@
     .item-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(255,255,255,0.06);}
     .item-body{flex:1;min-width:0;}
     .item-title{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .item-sub{font-size:12px;color:var(--text2);margin-top:2px;display:flex;align-items:center;gap:6px;}
+    .item-sub{font-size:12px;color:var(--text2);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
     .item-amount{font-size:16px;font-weight:600;flex-shrink:0;}
     .amount-neg{color:var(--red);}.amount-pos{color:var(--green);}
     .badge{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:500;}
@@ -76,38 +76,54 @@
     .progress-header{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
     .progress-bar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
     .progress-fill{height:100%;border-radius:3px;background:var(--accent);}
+    /* 月目標進度條（較粗） */
+    .goal-bar-bg{height:10px;background:var(--bg3);border-radius:5px;overflow:hidden;margin:8px 0 4px;}
+    .goal-bar-fill{height:100%;border-radius:5px;transition:width 0.4s;}
     .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
-    .chip{padding:5px 12px;border-radius:20px;font-size:13px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;}
+    .chip{padding:5px 12px;border-radius:20px;font-size:13px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:5px;}
     .chip.selected{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+    .chip-del{font-size:14px;line-height:1;opacity:0.5;cursor:pointer;}
+    .chip-del:hover{opacity:1;color:var(--red);}
     .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;margin-top:4px;}
     .section-label{font-size:16px;font-weight:600;}
     .empty{text-align:center;padding:40px 20px;color:var(--text3);}
     .empty p{font-size:14px;margin-top:10px;}
     .delete-btn{background:var(--red-dim);border:none;border-radius:8px;color:var(--red);padding:6px 10px;font-size:12px;cursor:pointer;font-family:inherit;}
     .settle-btn{background:rgba(126,200,160,0.12);border:none;border-radius:8px;color:var(--green);padding:6px 10px;font-size:12px;cursor:pointer;font-family:inherit;}
-    /* 月份切換 */
     .month-nav{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;}
     .month-nav button{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:0 8px;line-height:1;}
     .month-nav span{font-size:15px;font-weight:500;}
-    /* 搜尋列 */
     .search-bar{position:relative;margin-bottom:12px;}
     .search-bar input{padding-left:36px;font-size:14px;}
     .search-bar svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:0.4;width:16px;height:16px;pointer-events:none;}
-    /* 篩選 tabs */
     .filter-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none;}
     .filter-tabs::-webkit-scrollbar{display:none;}
     .ftab{padding:5px 14px;border-radius:20px;font-size:12px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;white-space:nowrap;flex-shrink:0;}
     .ftab.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+    /* 圓餅圖 */
+    .pie-wrap{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
+    canvas#pie-chart{flex-shrink:0;}
+    .pie-legend{flex:1;display:flex;flex-direction:column;gap:6px;}
+    .pie-legend-item{display:flex;align-items:center;gap:7px;font-size:12px;}
+    .pie-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
     /* 趨勢圖 */
     .chart-wrap{width:100%;height:120px;position:relative;margin-bottom:4px;}
     canvas#trend-chart{width:100%;height:100%;}
-    /* 總覽 sub-tabs */
     .sub-tabs{display:flex;gap:4px;background:var(--bg3);border-radius:var(--radius-sm);padding:3px;margin-bottom:14px;}
     .stab{flex:1;padding:7px;border:none;background:transparent;color:var(--text3);font-size:12px;font-family:inherit;border-radius:6px;cursor:pointer;transition:all 0.15s;}
     .stab.on{background:var(--bg2);color:var(--text);font-weight:500;}
     .sub-section{display:none;}.sub-section.on{display:block;}
+    /* 朋友新增輸入列 */
+    .friend-add-row{display:flex;gap:8px;margin-top:8px;}
+    .friend-add-row input{flex:1;font-size:14px;padding:8px 12px;}
+    .friend-add-row button{padding:8px 14px;background:var(--accent);color:#1a1400;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
     #toast{position:fixed;bottom:calc(90px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(10px);background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;padding:8px 18px;font-size:13px;opacity:0;transition:all 0.25s;pointer-events:none;z-index:999;white-space:nowrap;}
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+    /* 設定頁 */
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:0.5px solid var(--border);}
+    .setting-row:last-child{border-bottom:none;}
+    .setting-label{font-size:14px;}
+    .setting-sub{font-size:12px;color:var(--text3);margin-top:2px;}
   </style>
 </head>
 <body>
@@ -118,8 +134,21 @@
   </div>
   <div id="content">
 
-    <!-- 記帳頁 -->
+    <!-- ===== 記帳頁 ===== -->
     <div id="tab-expenses" class="section active">
+      <!-- 月目標（選填，有設定才顯示） -->
+      <div id="goal-card" class="card" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:13px;font-weight:500;">本月目標</span>
+          <span id="goal-remain" style="font-size:13px;color:var(--text2)"></span>
+        </div>
+        <div class="goal-bar-bg"><div id="goal-bar" class="goal-bar-fill" style="width:0%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);">
+          <span id="goal-spent">已花 $0</span>
+          <span id="goal-total-lbl">目標 $0</span>
+        </div>
+      </div>
+
       <div class="card">
         <div class="form-full">
           <label>描述（AI 自動分類）</label>
@@ -151,7 +180,7 @@
         </div>
         <button class="btn" onclick="addExpense()">＋ 新增記錄</button>
       </div>
-      <!-- 搜尋 + 篩選 -->
+
       <div class="search-bar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="exp-search" placeholder="搜尋記錄..." oninput="renderExpenses()">
@@ -173,7 +202,7 @@
       <div id="expense-list"></div>
     </div>
 
-    <!-- 欠款頁 -->
+    <!-- ===== 欠款頁 ===== -->
     <div id="tab-debts" class="section">
       <div class="card">
         <div class="form-full">
@@ -195,27 +224,32 @@
           </div>
         </div>
         <div class="form-full">
-          <label>朋友名字</label>
-          <input type="text" id="debt-person" placeholder="輸入名字..." oninput="filterFriends(this.value)">
+          <label>朋友</label>
+          <input type="text" id="debt-person" placeholder="輸入名字或從下方選..." oninput="filterFriends(this.value)">
+          <!-- 朋友 chips（可點選、可刪除） -->
           <div class="chips" id="friend-chips"></div>
+          <!-- 新增朋友列 -->
+          <div class="friend-add-row">
+            <input type="text" id="new-friend-input" placeholder="新增常用朋友..." maxlength="10">
+            <button onclick="addFriend()">新增</button>
+          </div>
           <div class="ai-hint" id="split-info"></div>
         </div>
         <button class="btn" onclick="addDebt()">＋ 新增欠款</button>
       </div>
-      <!-- 欠款 sub-tabs -->
+
       <div class="sub-tabs">
-        <button class="stab on" onclick="switchDebtTab('net')">淨額匯總</button>
+        <button class="stab on" onclick="switchDebtTab('net')">淨額</button>
         <button class="stab" onclick="switchDebtTab('active')">未結清</button>
-        <button class="stab" onclick="switchDebtTab('history')">歷史記錄</button>
+        <button class="stab" onclick="switchDebtTab('history')">歷史</button>
       </div>
       <div id="debt-sub-net" class="sub-section on"><div id="net-list"></div></div>
       <div id="debt-sub-active" class="sub-section"><div id="debt-list"></div></div>
       <div id="debt-sub-history" class="sub-section"><div id="debt-history-list"></div></div>
     </div>
 
-    <!-- 總覽頁 -->
+    <!-- ===== 總覽頁 ===== -->
     <div id="tab-summary" class="section">
-      <!-- 月份切換 -->
       <div class="month-nav">
         <button onclick="changeMonth(-1)">‹</button>
         <span id="month-label"></span>
@@ -226,18 +260,32 @@
         <div class="metric"><div class="metric-label">我欠別人</div><div class="metric-value amount-neg" id="s-owe">$0</div></div>
         <div class="metric"><div class="metric-label">別人欠我</div><div class="metric-value amount-pos" id="s-lent">$0</div></div>
       </div>
-      <!-- 總覽 sub-tabs -->
       <div class="sub-tabs">
         <button class="stab on" onclick="switchSumTab('breakdown')">分類</button>
         <button class="stab" onclick="switchSumTab('trend')">趨勢</button>
         <button class="stab" onclick="switchSumTab('friends')">朋友</button>
         <button class="stab" onclick="switchSumTab('backup')">備份</button>
       </div>
-      <!-- 分類 -->
+
+      <!-- 分類（含圓餅圖按鈕） -->
       <div id="sum-sub-breakdown" class="sub-section on">
-        <div class="card"><div id="cat-breakdown"></div></div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span class="card-title" style="margin:0">分類支出</span>
+            <button class="btn-sm btn-outline" onclick="togglePie()" id="pie-btn">圓餅圖</button>
+          </div>
+          <!-- 圓餅圖區，預設隱藏 -->
+          <div id="pie-area" style="display:none;margin-bottom:14px;">
+            <div class="pie-wrap">
+              <canvas id="pie-chart" width="130" height="130"></canvas>
+              <div class="pie-legend" id="pie-legend"></div>
+            </div>
+          </div>
+          <div id="cat-breakdown"></div>
+        </div>
       </div>
-      <!-- 趨勢折線圖 -->
+
+      <!-- 趨勢 -->
       <div id="sum-sub-trend" class="sub-section">
         <div class="card">
           <div class="card-title">近 6 個月支出趨勢</div>
@@ -246,24 +294,54 @@
         </div>
         <div class="card"><div class="card-title">月份明細</div><div id="trend-detail"></div></div>
       </div>
-      <!-- 朋友往來 -->
+
+      <!-- 朋友 -->
       <div id="sum-sub-friends" class="sub-section">
         <div class="card"><div class="card-title">朋友往來淨額</div><div id="friend-summary"></div></div>
       </div>
+
       <!-- 備份 -->
       <div id="sum-sub-backup" class="sub-section">
         <div class="card">
           <div class="card-title">資料備份與還原</div>
-          <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;">匯出會產生兩個檔案：<br>• <b style="color:var(--text)">.xlsx</b> — 可用 Excel 開啟查看<br>• <b style="color:var(--text)">.json</b> — 用於還原資料，請妥善保存</p>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;">
+            匯出會產生兩個檔案：<br>
+            • <b style="color:var(--text)">.csv</b> — 可用 Excel 開啟查看（含分類圖表資料）<br>
+            • <b style="color:var(--text)">.json</b> — 還原備份用，請妥善保存
+          </p>
           <button class="btn" onclick="exportData()" style="margin-bottom:10px;">📥 匯出備份</button>
-          <button class="btn btn-outline" onclick="document.getElementById('import-input').click()">📤 匯入還原（選 .json 檔）</button>
+          <button class="btn btn-outline" onclick="document.getElementById('import-input').click()">📤 匯入還原（選 .json）</button>
           <input type="file" id="import-input" accept=".json" style="display:none" onchange="handleImport(this)">
-          <p style="font-size:11px;color:var(--text3);margin-top:10px;">建議每個月底備份一次，存到 Google Drive 或 iCloud。</p>
+          <p style="font-size:11px;color:var(--text3);margin-top:10px;">建議每月底備份一次，存到 Google Drive 或 iCloud。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 設定頁 ===== -->
+    <div id="tab-settings" class="section">
+      <div class="card">
+        <div class="card-title">本月目標（選填）</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:10px;">設定後記帳頁頂部會顯示進度，不設定就不顯示。</p>
+        <div class="form-full">
+          <label>每月預算 (NT$)</label>
+          <input type="number" id="goal-input" placeholder="例如：15000" inputmode="numeric">
+        </div>
+        <button class="btn" onclick="saveGoal()">儲存目標</button>
+        <button class="btn btn-outline" onclick="clearGoal()" style="margin-top:8px;">清除目標</button>
+      </div>
+      <div class="card">
+        <div class="card-title">常用朋友管理</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:10px;">在欠款頁新增欠款時可以快速選擇。</p>
+        <div id="settings-friend-list"></div>
+        <div class="friend-add-row" style="margin-top:10px;">
+          <input type="text" id="settings-new-friend" placeholder="新增朋友名字..." maxlength="10">
+          <button onclick="addFriendFromSettings()">新增</button>
         </div>
       </div>
     </div>
 
   </div>
+
   <nav id="navbar">
     <button class="nav-btn active" id="nav-expenses" onclick="switchTab('expenses')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
@@ -277,23 +355,31 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       總覽
     </button>
+    <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      設定
+    </button>
   </nav>
 </div>
 <div id="toast"></div>
 
 <script>
+// =============================================
+// 常數設定
+// =============================================
 const TODAY = new Date().toISOString().split('T')[0];
 document.getElementById('exp-date').value = TODAY;
 
 const CAT = {
-  food:      {label:'餐飲',emoji:'🍜',badge:'badge-food'},
-  transport: {label:'交通',emoji:'🚇',badge:'badge-transport'},
-  shop:      {label:'購物',emoji:'🛍',badge:'badge-shop'},
-  entertain: {label:'娛樂',emoji:'🎮',badge:'badge-entertain'},
-  travel:    {label:'旅遊',emoji:'✈️',badge:'badge-travel'},
-  bill:      {label:'帳單',emoji:'💡',badge:'badge-bill'},
-  other:     {label:'其他',emoji:'📦',badge:'badge-other'}
+  food:      {label:'餐飲',emoji:'🍜',badge:'badge-food',     color:'#e8c97a'},
+  transport: {label:'交通',emoji:'🚇',badge:'badge-transport',color:'#7ab8e8'},
+  shop:      {label:'購物',emoji:'🛍',badge:'badge-shop',     color:'#c89cf0'},
+  entertain: {label:'娛樂',emoji:'🎮',badge:'badge-entertain',color:'#f09cd4'},
+  travel:    {label:'旅遊',emoji:'✈️',badge:'badge-travel',   color:'#7ec8a0'},
+  bill:      {label:'帳單',emoji:'💡',badge:'badge-bill',     color:'#e07070'},
+  other:     {label:'其他',emoji:'📦',badge:'badge-other',    color:'#9a9590'}
 };
+
 const KEYWORDS = {
   food:['餐','飯','吃','咖啡','珍奶','飲','食','早餐','午餐','晚餐','麥當勞','便當','麵','pizza','火鍋','燒肉','超商','711','全家','滷','菜','茶','奶','甜','蛋','壽司','烤','炒','湯','米','粥','麵包','蛋糕','冰','拉麵','鍋'],
   transport:['捷運','公車','計程車','uber','taxi','油','停車','高鐵','台鐵','機票','gogoro','youbike','腳踏車','火車','客運','mrt'],
@@ -302,119 +388,160 @@ const KEYWORDS = {
   travel:['旅遊','住宿','hotel','airbnb','景點','行程','出國','旅館','民宿','飯店','訂房'],
   bill:['電費','水費','瓦斯','網路','電話','房租','管理費','保險','學費','訂閱']
 };
-function guessCategory(d){
-  d=d.toLowerCase();
-  for(const[c,kws]of Object.entries(KEYWORDS)) if(kws.some(k=>d.includes(k))) return c;
+
+function guessCategory(d) {
+  d = d.toLowerCase();
+  for (const [c, kws] of Object.entries(KEYWORDS))
+    if (kws.some(k => d.includes(k))) return c;
   return 'other';
 }
 
-// 狀態
-let expenses=[],debts=[],nextExpId=1,nextDebtId=1;
-let catFilter='', viewMonth=TODAY.slice(0,7);
+// =============================================
+// 資料存取（全部用 localStorage）
+// =============================================
+let expenses = [], debts = [], friends = [], monthGoal = 0;
+let nextExpId = 1, nextDebtId = 1;
+let viewMonth = TODAY.slice(0,7);
+let catFilterVal = '';
+let pieVisible = false;
 
-function save(){
-  localStorage.setItem('zb_expenses',JSON.stringify(expenses));
-  localStorage.setItem('zb_debts',JSON.stringify(debts));
+function save() {
+  localStorage.setItem('zb_expenses', JSON.stringify(expenses));
+  localStorage.setItem('zb_debts',    JSON.stringify(debts));
+  localStorage.setItem('zb_friends',  JSON.stringify(friends));
+  localStorage.setItem('zb_goal',     monthGoal.toString());
 }
-function load(){
-  try{expenses=JSON.parse(localStorage.getItem('zb_expenses'))||[];}catch{expenses=[];}
-  try{debts=JSON.parse(localStorage.getItem('zb_debts'))||[];}catch{debts=[];}
-  nextExpId=expenses.reduce((m,e)=>Math.max(m,e.id),0)+1;
-  nextDebtId=debts.reduce((m,d)=>Math.max(m,d.id),0)+1;
+
+function load() {
+  try { expenses = JSON.parse(localStorage.getItem('zb_expenses')) || []; } catch { expenses = []; }
+  try { debts    = JSON.parse(localStorage.getItem('zb_debts'))    || []; } catch { debts = []; }
+  try { friends  = JSON.parse(localStorage.getItem('zb_friends'))  || []; } catch { friends = []; }
+  try { monthGoal = parseFloat(localStorage.getItem('zb_goal'))    || 0;  } catch { monthGoal = 0; }
+  nextExpId  = expenses.reduce((m,e) => Math.max(m, e.id), 0) + 1;
+  nextDebtId = debts.reduce((m,d)   => Math.max(m, d.id), 0) + 1;
 }
 load();
 
-// 分頁
-function switchTab(tab){
-  ['expenses','debts','summary'].forEach(t=>{
-    document.getElementById('tab-'+t).classList.toggle('active',t===tab);
-    document.getElementById('nav-'+t).classList.toggle('active',t===tab);
+// =============================================
+// 分頁切換
+// =============================================
+function switchTab(tab) {
+  ['expenses','debts','summary','settings'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('nav-'+t).classList.toggle('active', t===tab);
   });
-  const titles={expenses:'記帳',debts:'欠款追蹤',summary:'總覽'};
-  document.getElementById('page-title').textContent=titles[tab];
-  document.getElementById('page-sub').style.display=tab==='expenses'?'':'none';
-  if(tab==='summary'){viewMonth=TODAY.slice(0,7);renderSummary();}
+  const titles = {expenses:'記帳', debts:'欠款追蹤', summary:'總覽', settings:'設定'};
+  document.getElementById('page-title').textContent = titles[tab];
+  document.getElementById('page-sub').style.display = tab==='expenses' ? '' : 'none';
+  if (tab==='summary')  { viewMonth = TODAY.slice(0,7); renderSummary(); }
+  if (tab==='settings') renderSettingsFriends();
 }
 
-// 欠款 sub-tabs
-function switchDebtTab(t){
-  ['net','active','history'].forEach(x=>{
-    document.getElementById('debt-sub-'+x).classList.toggle('on',x===t);
-  });
-  document.querySelectorAll('#tab-debts .stab').forEach((b,i)=>b.classList.toggle('on',['net','active','history'][i]===t));
-  if(t==='history') renderDebtHistory();
+function switchDebtTab(t) {
+  ['net','active','history'].forEach(x =>
+    document.getElementById('debt-sub-'+x).classList.toggle('on', x===t)
+  );
+  document.querySelectorAll('#tab-debts .stab').forEach((b,i) =>
+    b.classList.toggle('on', ['net','active','history'][i]===t)
+  );
+  if (t==='history') renderDebtHistory();
 }
 
-// 總覽 sub-tabs
-function switchSumTab(t){
-  ['breakdown','trend','friends','backup'].forEach(x=>{
-    document.getElementById('sum-sub-'+x).classList.toggle('on',x===t);
-  });
-  document.querySelectorAll('#tab-summary .stab').forEach((b,i)=>b.classList.toggle('on',['breakdown','trend','friends','backup'][i]===t));
-  if(t==='trend') renderTrend();
-  if(t==='friends') renderFriendSummary();
+function switchSumTab(t) {
+  ['breakdown','trend','friends','backup'].forEach(x =>
+    document.getElementById('sum-sub-'+x).classList.toggle('on', x===t)
+  );
+  document.querySelectorAll('#tab-summary .stab').forEach((b,i) =>
+    b.classList.toggle('on', ['breakdown','trend','friends','backup'][i]===t)
+  );
+  if (t==='trend')   renderTrend();
+  if (t==='friends') renderFriendSummary();
 }
 
-// AI hint
+// =============================================
+// AI 分類提示
+// =============================================
 let aiTimer;
-function onDescInput(v){
+function onDescInput(v) {
   clearTimeout(aiTimer);
-  const h=document.getElementById('ai-hint');
-  if(!v||v.length<2){h.textContent='';return;}
-  h.textContent='✦ 分析中...';
-  aiTimer=setTimeout(()=>{
-    const c=guessCategory(v);
-    h.textContent=`✦ 自動分類：${CAT[c].emoji} ${CAT[c].label}`;
-    document.getElementById('exp-cat').value=c;
-  },350);
+  const h = document.getElementById('ai-hint');
+  if (!v || v.length < 2) { h.textContent = ''; return; }
+  h.textContent = '✦ 分析中...';
+  aiTimer = setTimeout(() => {
+    const c = guessCategory(v);
+    h.textContent = `✦ 自動分類：${CAT[c].emoji} ${CAT[c].label}`;
+    document.getElementById('exp-cat').value = c;
+  }, 350);
 }
 
+// =============================================
 // 記帳
-function addExpense(){
-  const desc=document.getElementById('exp-desc').value.trim();
-  const amount=parseFloat(document.getElementById('exp-amount').value);
-  const date=document.getElementById('exp-date').value||TODAY;
-  let cat=document.getElementById('exp-cat').value||guessCategory(desc);
-  if(!desc||!amount||amount<=0){showToast('請填入描述和金額');return;}
-  expenses.unshift({id:nextExpId++,desc,amount,cat,date});
+// =============================================
+function addExpense() {
+  const desc   = document.getElementById('exp-desc').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  const date   = document.getElementById('exp-date').value || TODAY;
+  let cat      = document.getElementById('exp-cat').value || guessCategory(desc);
+  if (!desc || !amount || amount <= 0) { showToast('請填入描述和金額'); return; }
+  expenses.unshift({ id: nextExpId++, desc, amount, cat, date });
   save();
-  document.getElementById('exp-desc').value='';
-  document.getElementById('exp-amount').value='';
-  document.getElementById('exp-cat').value='';
-  document.getElementById('ai-hint').textContent='';
+  document.getElementById('exp-desc').value  = '';
+  document.getElementById('exp-amount').value = '';
+  document.getElementById('exp-cat').value    = '';
+  document.getElementById('ai-hint').textContent = '';
   renderExpenses();
   showToast('已新增 ✓');
 }
 
-function deleteExpense(id){
-  if(!confirm('刪除這筆記錄？')) return;
-  expenses=expenses.filter(e=>e.id!==id);
-  save();renderExpenses();
+function deleteExpense(id) {
+  if (!confirm('刪除這筆記錄？')) return;
+  expenses = expenses.filter(e => e.id !== id);
+  save(); renderExpenses();
 }
 
-let catFilterVal='';
-function setCatFilter(v){
-  catFilterVal=v;
-  document.querySelectorAll('.ftab').forEach(t=>t.classList.toggle('on',t.dataset.cat===v));
+function setCatFilter(v) {
+  catFilterVal = v;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.toggle('on', t.dataset.cat===v));
   renderExpenses();
 }
 
-function renderExpenses(){
-  const search=(document.getElementById('exp-search').value||'').toLowerCase();
-  const month=TODAY.slice(0,7);
-  const total=expenses.filter(e=>e.date&&e.date.startsWith(month)).reduce((s,e)=>s+e.amount,0);
-  document.getElementById('header-total').textContent=total.toLocaleString();
-  let filtered=expenses;
-  if(catFilterVal) filtered=filtered.filter(e=>e.cat===catFilterVal);
-  if(search) filtered=filtered.filter(e=>e.desc.toLowerCase().includes(search)||e.date.includes(search));
-  document.getElementById('exp-count').textContent=`${filtered.length} 筆`;
-  const list=document.getElementById('expense-list');
-  if(!filtered.length){
-    list.innerHTML=`<div class="empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><p>${expenses.length?'沒有符合的記錄':'還沒有記錄，新增第一筆吧'}</p></div>`;
+function renderExpenses() {
+  // 月目標進度
+  const month = TODAY.slice(0,7);
+  const monthTotal = expenses.filter(e => e.date && e.date.startsWith(month)).reduce((s,e) => s+e.amount, 0);
+  document.getElementById('header-total').textContent = monthTotal.toLocaleString();
+
+  // 目標卡片
+  const goalCard = document.getElementById('goal-card');
+  if (monthGoal > 0) {
+    goalCard.style.display = '';
+    const pct = Math.min(monthTotal / monthGoal * 100, 100);
+    const over = monthTotal > monthGoal;
+    document.getElementById('goal-bar').style.width  = pct + '%';
+    document.getElementById('goal-bar').style.background = over ? 'var(--red)' : 'var(--accent)';
+    document.getElementById('goal-spent').textContent = `已花 $${monthTotal.toLocaleString()}`;
+    document.getElementById('goal-total-lbl').textContent = `目標 $${monthGoal.toLocaleString()}`;
+    document.getElementById('goal-remain').textContent = over
+      ? `⚠ 超支 $${(monthTotal-monthGoal).toLocaleString()}`
+      : `剩 $${(monthGoal-monthTotal).toLocaleString()}`;
+  } else {
+    goalCard.style.display = 'none';
+  }
+
+  // 搜尋 + 篩選
+  const search = (document.getElementById('exp-search').value || '').toLowerCase();
+  let filtered = expenses;
+  if (catFilterVal) filtered = filtered.filter(e => e.cat === catFilterVal);
+  if (search)       filtered = filtered.filter(e => e.desc.toLowerCase().includes(search) || e.date.includes(search));
+  document.getElementById('exp-count').textContent = `${filtered.length} 筆`;
+
+  const list = document.getElementById('expense-list');
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><p>${expenses.length ? '沒有符合的記錄' : '還沒有記錄，新增第一筆吧'}</p></div>`;
     return;
   }
-  list.innerHTML=`<div class="card">${filtered.map(e=>{
-    const c=CAT[e.cat]||CAT.other;
+  list.innerHTML = `<div class="card">${filtered.map(e => {
+    const c = CAT[e.cat] || CAT.other;
     return `<div class="list-item">
       <div class="item-icon">${c.emoji}</div>
       <div class="item-body">
@@ -429,76 +556,171 @@ function renderExpenses(){
   }).join('')}</div>`;
 }
 
-// 欠款
-const FRIENDS=['小明','阿花','大雄','靜香','胖虎','小夫'];
-const AV_COLS=['#7ab8e8','#7ec8a0','#e8c97a','#c89cf0','#f09cd4','#e07070'];
-const avColor=name=>AV_COLS[name.charCodeAt(0)%AV_COLS.length];
+// =============================================
+// 朋友管理（手動新增，存 localStorage）
+// =============================================
+const AV_COLS = ['#7ab8e8','#7ec8a0','#e8c97a','#c89cf0','#f09cd4','#e07070'];
+const avColor = name => AV_COLS[name.charCodeAt(0) % AV_COLS.length];
 
-function filterFriends(v){
-  const ms=v?FRIENDS.filter(f=>f.includes(v)):FRIENDS;
-  document.getElementById('friend-chips').innerHTML=ms.slice(0,6).map(f=>
-    `<span class="chip" onclick="selectFriend('${f}')">${f}</span>`
-  ).join('');
+// 在欠款頁新增朋友
+function addFriend() {
+  const input = document.getElementById('new-friend-input');
+  const name = input.value.trim();
+  if (!name) return;
+  if (friends.includes(name)) { showToast('已有這個朋友'); return; }
+  friends.push(name);
+  save();
+  input.value = '';
+  renderFriendChips();
+  showToast(`已新增 ${name} ✓`);
 }
-filterFriends('');
 
-function selectFriend(name){
-  document.getElementById('debt-person').value=name;
-  document.querySelectorAll('#friend-chips .chip').forEach(c=>c.classList.toggle('selected',c.textContent===name));
+// 在設定頁新增朋友
+function addFriendFromSettings() {
+  const input = document.getElementById('settings-new-friend');
+  const name = input.value.trim();
+  if (!name) return;
+  if (friends.includes(name)) { showToast('已有這個朋友'); return; }
+  friends.push(name);
+  save();
+  input.value = '';
+  renderFriendChips();
+  renderSettingsFriends();
+  showToast(`已新增 ${name} ✓`);
+}
+
+function deleteFriend(name) {
+  friends = friends.filter(f => f !== name);
+  save();
+  renderFriendChips();
+  renderSettingsFriends();
+  // 如果欄位裡剛好是這個人，清空
+  if (document.getElementById('debt-person').value === name)
+    document.getElementById('debt-person').value = '';
+}
+
+function filterFriends(val) {
+  renderFriendChips(val);
+}
+
+function renderFriendChips(filter='') {
+  const cur = document.getElementById('debt-person').value;
+  const list = filter ? friends.filter(f => f.includes(filter)) : friends;
+  document.getElementById('friend-chips').innerHTML = list.map(f =>
+    `<span class="chip${cur===f?' selected':''}" onclick="selectFriend('${f}')">
+      ${f}
+      <span class="chip-del" onclick="event.stopPropagation();deleteFriend('${f}')">×</span>
+    </span>`
+  ).join('') || (friends.length===0 ? '<span style="font-size:12px;color:var(--text3)">還沒有常用朋友，在下方新增</span>' : '');
+}
+
+function selectFriend(name) {
+  document.getElementById('debt-person').value = name;
+  renderFriendChips();
   updateSplitInfo();
 }
 
-function updateSplitInfo(){
-  const type=document.getElementById('debt-type').value;
-  const amount=parseFloat(document.getElementById('debt-amount').value)||0;
-  document.getElementById('split-info').textContent=(type==='split'&&amount>0)?`✦ 各付 NT$ ${Math.round(amount/2).toLocaleString()}`:'';
+function renderSettingsFriends() {
+  const el = document.getElementById('settings-friend-list');
+  if (!friends.length) {
+    el.innerHTML = '<p style="font-size:13px;color:var(--text3);padding:8px 0">還沒有常用朋友</p>';
+    return;
+  }
+  el.innerHTML = friends.map(f => {
+    const c = avColor(f);
+    return `<div class="setting-row">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="avatar" style="background:${c}22;color:${c};width:32px;height:32px;font-size:13px">${f[0]}</div>
+        <span class="setting-label">${f}</span>
+      </div>
+      <button class="delete-btn" onclick="deleteFriend('${f}')">刪除</button>
+    </div>`;
+  }).join('');
 }
 
-function addDebt(){
-  const desc=document.getElementById('debt-desc').value.trim();
-  const amount=parseFloat(document.getElementById('debt-amount').value);
-  const type=document.getElementById('debt-type').value;
-  const person=document.getElementById('debt-person').value.trim();
-  if(!desc||!amount||!person){showToast('請填完所有欄位');return;}
-  let actualAmount=amount,actualType=type;
-  if(type==='split'){actualAmount=Math.round(amount/2);actualType='owe';}
-  debts.unshift({id:nextDebtId++,desc,amount:actualAmount,type:actualType,person,date:TODAY,settled:false});
+// =============================================
+// 月目標
+// =============================================
+function saveGoal() {
+  const v = parseFloat(document.getElementById('goal-input').value);
+  if (!v || v <= 0) { showToast('請輸入有效金額'); return; }
+  monthGoal = v;
   save();
-  document.getElementById('debt-desc').value='';
-  document.getElementById('debt-amount').value='';
-  document.getElementById('debt-person').value='';
-  document.getElementById('split-info').textContent='';
-  document.querySelectorAll('#friend-chips .chip').forEach(c=>c.classList.remove('selected'));
+  renderExpenses();
+  showToast('目標已設定 ✓');
+}
+function clearGoal() {
+  monthGoal = 0;
+  document.getElementById('goal-input').value = '';
+  save();
+  renderExpenses();
+  showToast('目標已清除');
+}
+
+// 進入設定頁時填入現有值
+function initSettingsGoal() {
+  if (monthGoal > 0) document.getElementById('goal-input').value = monthGoal;
+}
+
+// =============================================
+// 欠款
+// =============================================
+function updateSplitInfo() {
+  const type   = document.getElementById('debt-type').value;
+  const amount = parseFloat(document.getElementById('debt-amount').value) || 0;
+  document.getElementById('split-info').textContent =
+    (type==='split' && amount>0) ? `✦ 各付 NT$ ${Math.round(amount/2).toLocaleString()}` : '';
+}
+
+function addDebt() {
+  const desc   = document.getElementById('debt-desc').value.trim();
+  const amount = parseFloat(document.getElementById('debt-amount').value);
+  const type   = document.getElementById('debt-type').value;
+  const person = document.getElementById('debt-person').value.trim();
+  if (!desc || !amount || !person) { showToast('請填完所有欄位'); return; }
+  let actualAmount = amount, actualType = type;
+  if (type==='split') { actualAmount = Math.round(amount/2); actualType='owe'; }
+  debts.unshift({ id: nextDebtId++, desc, amount: actualAmount, type: actualType, person, date: TODAY, settled: false });
+  // 自動把這個朋友加進常用列表
+  if (!friends.includes(person)) { friends.push(person); }
+  save();
+  document.getElementById('debt-desc').value   = '';
+  document.getElementById('debt-amount').value  = '';
+  document.getElementById('debt-person').value  = '';
+  document.getElementById('split-info').textContent = '';
+  renderFriendChips();
   renderDebts();
   showToast('已新增 ✓');
 }
 
-function settleOne(id){
-  debts=debts.map(d=>d.id===id?{...d,settled:true,settledDate:TODAY}:d);
-  save();renderDebts();showToast('已標記還清 ✓');
+function settleOne(id) {
+  debts = debts.map(d => d.id===id ? {...d, settled:true, settledDate:TODAY} : d);
+  save(); renderDebts(); showToast('已標記還清 ✓');
 }
 
-function computeNet(){
-  const net={},items={};
-  debts.filter(d=>!d.settled).forEach(d=>{
-    if(!net[d.person]) net[d.person]=0;
-    if(!items[d.person]) items[d.person]=[];
-    net[d.person]+=(d.type==='lent'?d.amount:-d.amount);
+function computeNet() {
+  const net = {}, items = {};
+  debts.filter(d => !d.settled).forEach(d => {
+    if (!net[d.person])   net[d.person]   = 0;
+    if (!items[d.person]) items[d.person] = [];
+    net[d.person] += (d.type==='lent' ? d.amount : -d.amount);
     items[d.person].push(d);
   });
-  return{net,items};
+  return { net, items };
 }
 
-function renderDebts(){
-  const{net,items}=computeNet();
-  const people=Object.keys(net);
-  const netList=document.getElementById('net-list');
-  if(!people.length){
-    netList.innerHTML=`<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><p>沒有待結清欠款</p></div>`;
+function renderDebts() {
+  const { net, items } = computeNet();
+  const people = Object.keys(net);
+
+  // 淨額
+  const netList = document.getElementById('net-list');
+  if (!people.length) {
+    netList.innerHTML = `<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><p>沒有待結清欠款</p></div>`;
   } else {
-    netList.innerHTML='<div class="card">'+people.map(p=>{
-      const v=net[p],isPos=v>0,c=avColor(p);
-      const bdk=items[p].map(i=>(i.type==='lent'?'＋':'－')+i.amount.toLocaleString()).join(' ');
+    netList.innerHTML = '<div class="card">' + people.map(p => {
+      const v = net[p], isPos = v>0, c = avColor(p);
+      const bdk = items[p].map(i => (i.type==='lent'?'＋':'－') + i.amount.toLocaleString()).join(' ');
       return `<div class="list-item">
         <div class="avatar" style="background:${c}22;color:${c}">${p[0]}</div>
         <div class="item-body">
@@ -510,33 +732,37 @@ function renderDebts(){
           <div style="font-size:11px;color:var(--text3)">${isPos?'對方欠你':'你欠對方'}</div>
         </div>
       </div>`;
-    }).join('')+'</div>';
+    }).join('') + '</div>';
   }
-  const active=debts.filter(d=>!d.settled);
-  const dl=document.getElementById('debt-list');
-  if(!active.length){dl.innerHTML='<div class="empty"><p>沒有未結清欠款</p></div>';return;}
-  dl.innerHTML='<div class="card">'+active.map(d=>{
-    const isOwe=d.type==='owe',c=avColor(d.person);
-    return `<div class="list-item">
-      <div class="avatar" style="background:${c}22;color:${c}">${d.person[0]}</div>
-      <div class="item-body">
-        <div class="item-title">${d.person} — ${d.desc}</div>
-        <div class="item-sub"><span>${d.date}</span><span style="color:${isOwe?'var(--red)':'var(--green)'}">${isOwe?'我欠對方':'對方欠我'}</span></div>
-      </div>
-      <div style="text-align:right">
-        <div class="item-amount ${isOwe?'amount-neg':'amount-pos'}">${isOwe?'−':'+'}$${d.amount.toLocaleString()}</div>
-        <button class="settle-btn" onclick="settleOne(${d.id})" style="margin-top:4px">還清</button>
-      </div>
-    </div>`;
-  }).join('')+'</div>';
+
+  // 未結清
+  const active = debts.filter(d => !d.settled);
+  const dl = document.getElementById('debt-list');
+  if (!active.length) { dl.innerHTML = '<div class="empty"><p>沒有未結清欠款</p></div>'; }
+  else {
+    dl.innerHTML = '<div class="card">' + active.map(d => {
+      const isOwe = d.type==='owe', c = avColor(d.person);
+      return `<div class="list-item">
+        <div class="avatar" style="background:${c}22;color:${c}">${d.person[0]}</div>
+        <div class="item-body">
+          <div class="item-title">${d.person} — ${d.desc}</div>
+          <div class="item-sub"><span>${d.date}</span><span style="color:${isOwe?'var(--red)':'var(--green)'}">${isOwe?'我欠對方':'對方欠我'}</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="item-amount ${isOwe?'amount-neg':'amount-pos'}">${isOwe?'−':'+'}$${d.amount.toLocaleString()}</div>
+          <button class="settle-btn" onclick="settleOne(${d.id})" style="margin-top:4px">還清</button>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+  }
 }
 
-function renderDebtHistory(){
-  const settled=debts.filter(d=>d.settled);
-  const el=document.getElementById('debt-history-list');
-  if(!settled.length){el.innerHTML='<div class="empty"><p>還沒有已結清的記錄</p></div>';return;}
-  el.innerHTML='<div class="card">'+settled.map(d=>{
-    const isOwe=d.type==='owe',c=avColor(d.person);
+function renderDebtHistory() {
+  const settled = debts.filter(d => d.settled);
+  const el = document.getElementById('debt-history-list');
+  if (!settled.length) { el.innerHTML = '<div class="empty"><p>還沒有已結清的記錄</p></div>'; return; }
+  el.innerHTML = '<div class="card">' + settled.map(d => {
+    const isOwe = d.type==='owe', c = avColor(d.person);
     return `<div class="list-item">
       <div class="avatar" style="background:${c}22;color:${c};opacity:0.6">${d.person[0]}</div>
       <div class="item-body">
@@ -547,54 +773,209 @@ function renderDebtHistory(){
         <div class="item-amount" style="color:var(--text2)">${isOwe?'−':'+'}$${d.amount.toLocaleString()}</div>
       </div>
     </div>`;
-  }).join('')+'</div>';
+  }).join('') + '</div>';
 }
 
+// =============================================
 // 總覽
-function changeMonth(dir){
-  const d=new Date(viewMonth+'-01');
+// =============================================
+function changeMonth(dir) {
+  const d = new Date(viewMonth+'-01');
   d.setMonth(d.getMonth()+dir);
-  const newM=d.toISOString().slice(0,7);
-  const allMonths=[...new Set(expenses.map(e=>e.date.slice(0,7)))];
-  if(dir>0&&newM>TODAY.slice(0,7)) return;
-  viewMonth=newM;
+  const newM = d.toISOString().slice(0,7);
+  if (dir>0 && newM > TODAY.slice(0,7)) return;
+  viewMonth = newM;
   renderSummary();
 }
 
-function renderSummary(){
-  const m=viewMonth;
-  const label=new Date(m+'-01').toLocaleDateString('zh-TW',{year:'numeric',month:'long'});
-  document.getElementById('month-label').textContent=label;
-  const monthly=expenses.filter(e=>e.date&&e.date.startsWith(m));
-  const total=monthly.reduce((s,e)=>s+e.amount,0);
-  const active=debts.filter(d=>!d.settled);
-  const owe=active.filter(d=>d.type==='owe').reduce((s,d)=>s+d.amount,0);
-  const lent=active.filter(d=>d.type==='lent').reduce((s,d)=>s+d.amount,0);
-  document.getElementById('s-total').textContent='$'+total.toLocaleString();
-  document.getElementById('s-owe').textContent='$'+owe.toLocaleString();
-  document.getElementById('s-lent').textContent='$'+lent.toLocaleString();
-  const cats={};
-  monthly.forEach(e=>{cats[e.cat]=(cats[e.cat]||0)+e.amount;});
-  const catEl=document.getElementById('cat-breakdown');
-  if(!Object.keys(cats).length){catEl.innerHTML='<p style="font-size:13px;color:var(--text2)">本月尚無記錄</p>';}
-  else{
-    catEl.innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([cat,amt])=>{
-      const c=CAT[cat]||CAT.other,pct=total>0?Math.round(amt/total*100):0;
+function renderSummary() {
+  const m = viewMonth;
+  document.getElementById('month-label').textContent =
+    new Date(m+'-01').toLocaleDateString('zh-TW', {year:'numeric', month:'long'});
+
+  const monthly = expenses.filter(e => e.date && e.date.startsWith(m));
+  const total   = monthly.reduce((s,e) => s+e.amount, 0);
+  const active  = debts.filter(d => !d.settled);
+  const owe     = active.filter(d => d.type==='owe').reduce((s,d) => s+d.amount, 0);
+  const lent    = active.filter(d => d.type==='lent').reduce((s,d) => s+d.amount, 0);
+  document.getElementById('s-total').textContent = '$'+total.toLocaleString();
+  document.getElementById('s-owe').textContent   = '$'+owe.toLocaleString();
+  document.getElementById('s-lent').textContent  = '$'+lent.toLocaleString();
+
+  // 分類進度條
+  const cats = {};
+  monthly.forEach(e => { cats[e.cat] = (cats[e.cat]||0) + e.amount; });
+  const catEl = document.getElementById('cat-breakdown');
+  if (!Object.keys(cats).length) {
+    catEl.innerHTML = '<p style="font-size:13px;color:var(--text2)">本月尚無記錄</p>';
+  } else {
+    catEl.innerHTML = Object.entries(cats).sort((a,b) => b[1]-a[1]).map(([cat,amt]) => {
+      const c = CAT[cat]||CAT.other;
+      const pct = total>0 ? Math.round(amt/total*100) : 0;
       return `<div class="progress-row">
         <div class="progress-header"><span>${c.emoji} ${c.label}</span><span style="color:var(--text2)">$${amt.toLocaleString()} <span style="color:var(--text3)">${pct}%</span></span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${c.color}"></div></div>
       </div>`;
     }).join('');
   }
+
+  // 圓餅圖（如果打開中就重畫）
+  if (pieVisible) drawPie(cats, total);
 }
 
-function renderFriendSummary(){
-  const{net}=computeNet();
-  const fEl=document.getElementById('friend-summary');
-  const entries=Object.entries(net);
-  if(!entries.length){fEl.innerHTML='<p style="font-size:13px;color:var(--text2)">沒有往來記錄</p>';return;}
-  fEl.innerHTML=entries.map(([name,val])=>{
-    const isPos=val>=0,c=avColor(name);
+// =============================================
+// 圓餅圖（純 Canvas，不依賴外部套件）
+// =============================================
+// 原理：把每個分類的佔比換算成圓弧角度，用 canvas.arc() 畫出來
+// arc(cx, cy, r, startAngle, endAngle) — 角度用弧度，從 -π/2（12點鐘方向）開始
+function togglePie() {
+  pieVisible = !pieVisible;
+  document.getElementById('pie-area').style.display = pieVisible ? '' : 'none';
+  document.getElementById('pie-btn').textContent = pieVisible ? '隱藏圖表' : '圓餅圖';
+  if (pieVisible) {
+    const m = viewMonth;
+    const monthly = expenses.filter(e => e.date && e.date.startsWith(m));
+    const total   = monthly.reduce((s,e) => s+e.amount, 0);
+    const cats    = {};
+    monthly.forEach(e => { cats[e.cat] = (cats[e.cat]||0) + e.amount; });
+    drawPie(cats, total);
+  }
+}
+
+function drawPie(cats, total) {
+  const canvas = document.getElementById('pie-chart');
+  const ctx    = canvas.getContext('2d');
+  const dpr    = window.devicePixelRatio || 1;
+  const SIZE   = 130;
+  canvas.width  = SIZE * dpr;
+  canvas.height = SIZE * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, SIZE, SIZE);
+
+  const cx = SIZE/2, cy = SIZE/2, r = SIZE/2 - 4;
+  const entries = Object.entries(cats).sort((a,b) => b[1]-a[1]);
+
+  if (!total || !entries.length) {
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+    return;
+  }
+
+  let startAngle = -Math.PI / 2; // 從 12 點鐘方向開始
+
+  entries.forEach(([cat, amt]) => {
+    const slice = (amt / total) * Math.PI * 2; // 這個分類的弧度
+    const c = CAT[cat] || CAT.other;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, startAngle + slice);
+    ctx.closePath();
+    ctx.fillStyle = c.color;
+    ctx.fill();
+    // 分隔線
+    ctx.strokeStyle = '#0f0f0f';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    startAngle += slice;
+  });
+
+  // 中間挖空（甜甜圈效果）
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.52, 0, Math.PI*2);
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fill();
+
+  // 圖例
+  const legend = document.getElementById('pie-legend');
+  legend.innerHTML = entries.map(([cat, amt]) => {
+    const c = CAT[cat]||CAT.other;
+    const pct = Math.round(amt/total*100);
+    return `<div class="pie-legend-item">
+      <div class="pie-dot" style="background:${c.color}"></div>
+      <span style="color:var(--text2)">${c.emoji} ${c.label}</span>
+      <span style="margin-left:auto;font-weight:500">${pct}%</span>
+    </div>`;
+  }).join('');
+}
+
+// =============================================
+// 趨勢折線圖（純 Canvas）
+// =============================================
+function renderTrend() {
+  const months = [];
+  const d = new Date(TODAY.slice(0,7)+'-01');
+  for (let i=5; i>=0; i--) {
+    const dd = new Date(d.getFullYear(), d.getMonth()-i, 1);
+    months.push(dd.toISOString().slice(0,7));
+  }
+  const totals = months.map(m =>
+    expenses.filter(e => e.date && e.date.startsWith(m)).reduce((s,e) => s+e.amount, 0)
+  );
+  const labels = months.map(m => (new Date(m+'-01').getMonth()+1)+'月');
+  document.getElementById('trend-labels').innerHTML = labels.map(l=>`<span>${l}</span>`).join('');
+
+  const canvas = document.getElementById('trend-chart');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth || 300, H = 120;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const max = Math.max(...totals, 1);
+  const pad = {t:14, r:10, b:10, l:10};
+  const cw = W-pad.l-pad.r, ch = H-pad.t-pad.b;
+  const xs = months.map((_,i) => pad.l + i*(cw/(months.length-1)));
+  const ys = totals.map(v => pad.t + ch - (v/max)*ch);
+
+  // 填色
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  xs.forEach((_,i) => { if(i>0) ctx.lineTo(xs[i], ys[i]); });
+  ctx.lineTo(xs[xs.length-1], H-pad.b);
+  ctx.lineTo(xs[0], H-pad.b);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(232,201,122,0.08)';
+  ctx.fill();
+
+  // 折線
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  xs.forEach((_,i) => { if(i>0) ctx.lineTo(xs[i], ys[i]); });
+  ctx.strokeStyle = '#e8c97a'; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+
+  // 點 + 金額標籤
+  totals.forEach((v,i) => {
+    ctx.beginPath(); ctx.arc(xs[i], ys[i], 3, 0, Math.PI*2);
+    ctx.fillStyle = '#e8c97a'; ctx.fill();
+    if (v > 0) {
+      ctx.fillStyle = 'rgba(154,149,144,0.9)';
+      ctx.font = `9px -apple-system,sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText('$'+(v>=1000?Math.round(v/1000)+'k':v), xs[i], ys[i]-8);
+    }
+  });
+
+  // 月份明細
+  document.getElementById('trend-detail').innerHTML = months.map((m,i) => {
+    const lbl = new Date(m+'-01').toLocaleDateString('zh-TW', {year:'numeric', month:'long'});
+    const cnt = expenses.filter(e => e.date && e.date.startsWith(m)).length;
+    return `<div class="list-item">
+      <div class="item-body"><div class="item-title">${lbl}</div><div class="item-sub">${cnt} 筆記錄</div></div>
+      <div class="item-amount">$${totals[i].toLocaleString()}</div>
+    </div>`;
+  }).reverse().join('');
+}
+
+// =============================================
+// 朋友往來（總覽用）
+// =============================================
+function renderFriendSummary() {
+  const { net } = computeNet();
+  const fEl = document.getElementById('friend-summary');
+  const entries = Object.entries(net);
+  if (!entries.length) { fEl.innerHTML = '<p style="font-size:13px;color:var(--text2)">沒有往來記錄</p>'; return; }
+  fEl.innerHTML = entries.map(([name,val]) => {
+    const isPos = val>=0, c = avColor(name);
     return `<div class="list-item">
       <div class="avatar" style="background:${c}22;color:${c};width:32px;height:32px;font-size:13px;border-radius:50%">${name[0]}</div>
       <span style="flex:1;font-size:14px">${name}</span>
@@ -603,124 +984,113 @@ function renderFriendSummary(){
   }).join('');
 }
 
-// 趨勢折線圖（純 Canvas，不依賴外部套件）
-function renderTrend(){
-  const months=[];
-  const d=new Date(TODAY.slice(0,7)+'-01');
-  for(let i=5;i>=0;i--){
-    const dd=new Date(d.getFullYear(),d.getMonth()-i,1);
-    months.push(dd.toISOString().slice(0,7));
-  }
-  const totals=months.map(m=>expenses.filter(e=>e.date&&e.date.startsWith(m)).reduce((s,e)=>s+e.amount,0));
-  const labels=months.map(m=>{const dd=new Date(m+'-01');return(dd.getMonth()+1)+'月';});
-  document.getElementById('trend-labels').innerHTML=labels.map(l=>`<span>${l}</span>`).join('');
-  const canvas=document.getElementById('trend-chart');
-  const dpr=window.devicePixelRatio||1;
-  const W=canvas.offsetWidth||300,H=120;
-  canvas.width=W*dpr;canvas.height=H*dpr;
-  const ctx=canvas.getContext('2d');
-  ctx.scale(dpr,dpr);
-  const max=Math.max(...totals,1);
-  const pad={t:10,r:10,b:10,l:10};
-  const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
-  const xs=months.map((_,i)=>pad.l+i*(cw/(months.length-1)));
-  const ys=totals.map(v=>pad.t+ch-(v/max)*ch);
-  // 填色
-  ctx.beginPath();
-  ctx.moveTo(xs[0],ys[0]);
-  xs.forEach((_,i)=>{if(i>0) ctx.lineTo(xs[i],ys[i]);});
-  ctx.lineTo(xs[xs.length-1],H-pad.b);
-  ctx.lineTo(xs[0],H-pad.b);
-  ctx.closePath();
-  ctx.fillStyle='rgba(232,201,122,0.08)';
-  ctx.fill();
-  // 折線
-  ctx.beginPath();
-  ctx.moveTo(xs[0],ys[0]);
-  xs.forEach((_,i)=>{if(i>0) ctx.lineTo(xs[i],ys[i]);});
-  ctx.strokeStyle='#e8c97a';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
-  // 點
-  xs.forEach((x,i)=>{
-    ctx.beginPath();ctx.arc(x,ys[i],3,0,Math.PI*2);
-    ctx.fillStyle='#e8c97a';ctx.fill();
-  });
-  // 金額標籤
-  totals.forEach((v,i)=>{
-    if(v===0) return;
-    ctx.fillStyle='rgba(154,149,144,0.9)';ctx.font=`${9*dpr/dpr}px -apple-system,sans-serif`;ctx.textAlign='center';
-    ctx.fillText('$'+(v>=1000?Math.round(v/1000)+'k':v),xs[i],ys[i]-8);
-  });
-  // 月份明細
-  document.getElementById('trend-detail').innerHTML=months.map((m,i)=>{
-    const lbl=new Date(m+'-01').toLocaleDateString('zh-TW',{year:'numeric',month:'long'});
-    const cnt=expenses.filter(e=>e.date&&e.date.startsWith(m)).length;
-    return `<div class="list-item">
-      <div class="item-body"><div class="item-title">${lbl}</div><div class="item-sub">${cnt} 筆記錄</div></div>
-      <div class="item-amount">$${totals[i].toLocaleString()}</div>
-    </div>`;
-  }).reverse().join('');
-}
-
+// =============================================
 // 備份匯出（CSV + JSON）
-function exportData(){
-  const now=new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
-  // CSV（Excel 可開）
-  const BOM='\uFEFF';
-  let csv=BOM+'=== 記帳記錄 ===\n日期,描述,分類,金額\n';
-  expenses.forEach(e=>{csv+=`${e.date},"${e.desc}",${CAT[e.cat]?CAT[e.cat].label:'其他'},${e.amount}\n`;});
-  csv+='\n=== 欠款明細 ===\n日期,說明,朋友,類型,金額,狀態\n';
-  debts.forEach(d=>{csv+=`${d.date},"${d.desc}","${d.person}",${d.type==='owe'?'我欠對方':'對方欠我'},${d.amount},${d.settled?'已結清':'未結清'}\n`;});
-  const{net}=computeNet();
-  csv+='\n=== 欠款淨額 ===\n朋友,淨額,方向\n';
-  Object.entries(net).forEach(([n,v])=>{csv+=`"${n}",${Math.abs(v)},${v>=0?'對方欠你':'你欠對方'}\n`;});
-  dlFile(csv,'text/csv',`帳本_${now}.csv`);
-  // JSON（還原用）
-  setTimeout(()=>{
-    dlFile(JSON.stringify({expenses,debts,exportedAt:new Date().toISOString()},null,2),'application/json',`帳本備份_${now}.json`);
-  },600);
+// =============================================
+// CSV 的邏輯：
+// 每一列用逗號分隔，有中文或逗號的欄位要用雙引號包起來
+// BOM（\uFEFF）是讓 Excel 知道這是 UTF-8，否則中文會亂碼
+function exportData() {
+  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
+  const BOM = '\uFEFF';
+
+  // 記帳記錄
+  let csv = BOM + '=== 記帳記錄 ===\n日期,描述,分類,金額\n';
+  expenses.forEach(e => {
+    csv += `${e.date},"${e.desc}",${CAT[e.cat]?CAT[e.cat].label:'其他'},${e.amount}\n`;
+  });
+
+  // 欠款明細
+  csv += '\n=== 欠款明細 ===\n日期,說明,朋友,類型,金額,狀態\n';
+  debts.forEach(d => {
+    csv += `${d.date},"${d.desc}","${d.person}",${d.type==='owe'?'我欠對方':'對方欠我'},${d.amount},${d.settled?'已結清':'未結清'}\n`;
+  });
+
+  // 淨額（給 Excel 看）
+  const { net } = computeNet();
+  csv += '\n=== 欠款淨額 ===\n朋友,淨額,方向\n';
+  Object.entries(net).forEach(([n,v]) => {
+    csv += `"${n}",${Math.abs(v)},${v>=0?'對方欠你':'你欠對方'}\n`;
+  });
+
+  // 分類統計（Excel 可以用這個資料自己畫圓餅圖）
+  const month = TODAY.slice(0,7);
+  const cats  = {};
+  expenses.filter(e => e.date && e.date.startsWith(month)).forEach(e => {
+    cats[e.cat] = (cats[e.cat]||0) + e.amount;
+  });
+  csv += '\n=== 本月分類統計（可用此資料在 Excel 插入圓餅圖）===\n分類,金額\n';
+  Object.entries(cats).forEach(([cat,amt]) => {
+    csv += `${CAT[cat]?CAT[cat].label:'其他'},${amt}\n`;
+  });
+
+  dlFile(csv, 'text/csv', `帳本_${now}.csv`);
+
+  // JSON 備份（用於還原）
+  setTimeout(() => {
+    dlFile(
+      JSON.stringify({ expenses, debts, friends, monthGoal, exportedAt: new Date().toISOString() }, null, 2),
+      'application/json',
+      `帳本備份_${now}.json`
+    );
+  }, 600);
   showToast('已匯出兩個檔案 ✓');
 }
 
-function dlFile(content,type,name){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([content],{type}));
-  a.download=name;a.click();
+function dlFile(content, type, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type}));
+  a.download = name;
+  a.click();
 }
 
-// 匯入（只接受 JSON）
-function handleImport(input){
-  const file=input.files[0];
-  if(!file) return;
-  if(!file.name.endsWith('.json')){showToast('請選擇 .json 備份檔，不是 .xlsx');return;}
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      if(!data.expenses||!data.debts){showToast('檔案格式不對');return;}
-      if(!confirm(`確定還原備份？\n${data.expenses.length} 筆記帳、${data.debts.length} 筆欠款\n\n目前資料會被覆蓋`)) return;
-      expenses=data.expenses;debts=data.debts;
-      nextExpId=expenses.reduce((m,e)=>Math.max(m,e.id),0)+1;
-      nextDebtId=debts.reduce((m,d)=>Math.max(m,d.id),0)+1;
-      save();renderExpenses();renderDebts();renderSummary();
+// =============================================
+// 匯入 JSON 還原
+// =============================================
+function handleImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!file.name.endsWith('.json')) { showToast('請選 .json 備份檔，不是 .csv'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.expenses || !data.debts) { showToast('檔案格式不對'); return; }
+      if (!confirm(`確定還原備份？\n${data.expenses.length} 筆記帳、${data.debts.length} 筆欠款\n目前資料會被覆蓋`)) return;
+      expenses   = data.expenses;
+      debts      = data.debts;
+      friends    = data.friends    || [];
+      monthGoal  = data.monthGoal  || 0;
+      nextExpId  = expenses.reduce((m,e) => Math.max(m, e.id), 0) + 1;
+      nextDebtId = debts.reduce((m,d)   => Math.max(m, d.id), 0) + 1;
+      save();
+      renderExpenses(); renderDebts(); renderFriendChips();
       showToast('備份還原成功 ✓');
-    }catch{showToast('讀取失敗，請確認是正確的 .json 備份檔');}
+    } catch { showToast('讀取失敗，請確認是正確的 .json 備份檔'); }
   };
   reader.readAsText(file);
-  input.value='';
+  input.value = '';
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+// =============================================
+// Toast 提示
+// =============================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+// =============================================
+// 初始化
+// =============================================
 renderExpenses();
 renderDebts();
-viewMonth=TODAY.slice(0,7);
+renderFriendChips();
+viewMonth = TODAY.slice(0,7);
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 </script>
 </body>
