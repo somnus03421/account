@@ -242,7 +242,7 @@
             <span style="font-size:13px;color:var(--text2)">人平分</span>
           </div>
           <!-- 比例模式 -->
-          <div id="split-percent-row" style="display:none;display:flex;align-items:center;gap:8px;">
+          <div id="split-percent-row" style="display:none;align-items:center;gap:8px;">
             <span style="font-size:13px;color:var(--text2);white-space:nowrap;">我出</span>
             <input type="number" id="split-percent" value="50" min="1" max="99" inputmode="numeric" oninput="updateSplitInfo()" style="width:70px;font-size:15px;text-align:center;">
             <span style="font-size:13px;color:var(--text2)">%</span>
@@ -691,10 +691,51 @@ function initSettingsGoal() {
 // 欠款
 // =============================================
 function updateSplitInfo() {
-  const type   = document.getElementById('debt-type').value;
+  const type = document.getElementById('debt-type').value;
   const amount = parseFloat(document.getElementById('debt-amount').value) || 0;
-  document.getElementById('split-info').textContent =
-    (type==='split' && amount>0) ? `✦ 各付 NT$ ${Math.round(amount/2).toLocaleString()}` : '';
+
+  const config = document.getElementById('split-config');
+  const peopleRow = document.getElementById('split-people-row');
+  const percentRow = document.getElementById('split-percent-row');
+  const info = document.getElementById('split-info');
+
+  // 是否顯示分攤設定
+  config.style.display = type === 'split' ? 'block' : 'none';
+
+  if (type !== 'split' || amount <= 0) {
+    info.textContent = '';
+    return;
+  }
+
+  const mode = document.querySelector(
+    'input[name="split-mode"]:checked'
+  ).value;
+
+  if (mode === 'people') {
+    peopleRow.style.display = 'flex';
+    percentRow.style.display = 'none';
+
+    const people =
+      parseInt(document.getElementById('split-people').value) || 2;
+
+    const each = Math.round(amount / people);
+
+    info.textContent =
+      `✦ 共 ${people} 人，每人 NT$ ${each.toLocaleString()}`;
+  }
+  else {
+    peopleRow.style.display = 'none';
+    percentRow.style.display = 'flex';
+
+    const percent =
+      parseFloat(document.getElementById('split-percent').value) || 50;
+
+    const mine = Math.round(amount * percent / 100);
+    const other = amount - mine;
+
+    info.textContent =
+      `✦ 你付 NT$ ${mine.toLocaleString()}，朋友付 NT$ ${other.toLocaleString()}`;
+  }
 }
 
 function addDebt() {
