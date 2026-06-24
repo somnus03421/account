@@ -219,8 +219,33 @@
             <select id="debt-type" onchange="updateSplitInfo()">
               <option value="owe">我欠對方</option>
               <option value="lent">對方欠我</option>
-              <option value="split">均攤（÷2）</option>
+              <option value="split">自訂分攤</option>
             </select>
+          </div>
+        </div>
+        <!-- 分攤設定區，只有選「自訂分攤」才顯示 -->
+        <div id="split-config" style="display:none;background:var(--bg3);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;">
+          <div style="display:flex;gap:12px;margin-bottom:10px;">
+            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;color:var(--text);">
+              <input type="radio" name="split-mode" value="people" checked onchange="updateSplitInfo()" style="width:auto;padding:0;background:none;border:none;accent-color:var(--accent)">
+              人數均分
+            </label>
+            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;color:var(--text);">
+              <input type="radio" name="split-mode" value="percent" onchange="updateSplitInfo()" style="width:auto;padding:0;background:none;border:none;accent-color:var(--accent)">
+              自訂比例
+            </label>
+          </div>
+          <!-- 人數均分模式 -->
+          <div id="split-people-row" style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:13px;color:var(--text2);white-space:nowrap;">共幾人</span>
+            <input type="number" id="split-people" value="2" min="2" max="20" inputmode="numeric" oninput="updateSplitInfo()" style="width:70px;font-size:15px;text-align:center;">
+            <span style="font-size:13px;color:var(--text2)">人平分</span>
+          </div>
+          <!-- 比例模式 -->
+          <div id="split-percent-row" style="display:none;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:13px;color:var(--text2);white-space:nowrap;">我出</span>
+            <input type="number" id="split-percent" value="50" min="1" max="99" inputmode="numeric" oninput="updateSplitInfo()" style="width:70px;font-size:15px;text-align:center;">
+            <span style="font-size:13px;color:var(--text2)">%</span>
           </div>
         </div>
         <div class="form-full">
