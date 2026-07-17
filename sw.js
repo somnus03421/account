@@ -1,4 +1,4 @@
-const CACHE = 'zhangben-' + 20260717;
+const CACHE = 'zhangben-';
 const FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e =>
