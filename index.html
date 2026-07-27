@@ -1358,10 +1358,27 @@ function exportData() {
   showToast('已匯出兩個檔案 ✓');
 }
 
-function dlFile(content,type,name){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([content],{type}));
-  a.download=name;a.click();
+// 1. 匯出 CSV 報表
+function exportCSV() {
+  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g, '-');
+  const BOM = '\uFEFF';
+  let csv = BOM + '=== 支出記錄 ===\n日期,描述,分類,金額\n';
+  expenses.forEach(e => { csv += `${e.date},"${e.desc}",${getAllCats()[e.cat]?.label || '其他'},${e.amount}\n`; });
+  csv += '\n=== 收入記錄 ===\n日期,描述,分類,金額\n';
+  incomes.forEach(e => { csv += `${e.date},"${e.desc}",${INCOME_CATS[e.cat]?.label || '其他'},${e.amount}\n`; });
+  csv += '\n=== 欠款明細 ===\n日期,說明,朋友,類型,金額,狀態\n';
+  debts.forEach(d => { csv += `${d.date},"${d.desc}","${d.person}",${d.type === 'owe' ? '我欠對方' : '對方欠我'},${d.amount},${d.settled ? '已結清' : '未結清'}\n`; });
+
+  dlFile(csv, 'text/csv', `帳本_${now}.csv`);
+  showToast('已匯出 CSV 報表 ✓');
+}
+
+// 2. 匯出 JSON 備份 (換手機還原用)
+function exportJSON() {
+  const now = new Date().toLocaleDateString('zh-TW').replace(/\//g, '-');
+  const data = JSON.stringify({ expenses, incomes, debts, friends, customCats, monthGoal, exportedAt: new Date().toISOString() }, null, 2);
+  dlFile(data, 'application/json', `帳本備份_${now}.json`);
+  showToast('已匯出 JSON 備份檔 ✓');
 }
 
 function handleImport(input){
