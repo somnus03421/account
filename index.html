@@ -323,7 +323,8 @@
         <div class="card">
           <div class="card-title">資料備份與還原</div>
           <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;">匯出兩個檔案：<br>• <b style="color:var(--text)">.csv</b> 用 Excel 開啟<br>• <b style="color:var(--text)">.json</b> 用於還原</p>
-          <button class="btn" onclick="exportData()" style="margin-bottom:10px;">📥 匯出備份</button>
+          <button class="btn" onclick="exportCSV()" style="margin-bottom:10px;">📊 匯出 CSV 報表</button>
+          <button class="btn btn-outline" onclick="exportJSON()" style="margin-bottom:10px;">📦 匯出 JSON 備份檔</button>
           <button class="btn btn-outline" onclick="document.getElementById('import-input').click()">📤 匯入還原（.json）</button>
           <input type="file" id="import-input" accept=".json" style="display:none" onchange="handleImport(this)">
           <p style="font-size:11px;color:var(--text3);margin-top:10px;">建議每月底備份一次</p>
