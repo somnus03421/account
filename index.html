@@ -1338,6 +1338,37 @@ function renderFriendSummary() {
 // =============================================
 // 備份
 // =============================================
+async function dlFile(content, type, name) {
+  const blob = new Blob([content], { type });
+  const file = new File([blob], name, { type });
+
+  // 1. 手機端：如果支援原生分享（Android WebView / Chrome）
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({
+        files: [file],
+        title: name,
+      });
+      return; // 分享成功或跳出視窗後直接結束
+    } catch (err) {
+      // 使用者手動關閉分享選單時不報錯
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  // 2. 電腦端/備用方案：使用一般的 URL 觸發下載
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  
+  // 延遲釋放記憶體
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+  
 function exportData() {
   const now=new Date().toLocaleDateString('zh-TW').replace(/\//g,'-');
   const BOM='\uFEFF';
